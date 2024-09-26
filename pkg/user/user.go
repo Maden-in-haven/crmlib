@@ -29,3 +29,4 @@ func AuthenticateUser(username, password string) (*model.User, error) {
 	// Возвращаем пользователя, если пароль верен
 	return user, nil
 }
+
