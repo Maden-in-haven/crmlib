@@ -1,7 +1,7 @@
 package database
 
 import (
-	"github.com/Maden-in-haven/crmlib/internal/config"
+	"github.com/Maden-in-haven/crmlib/pkg/config"
 	"context"
 	"log"
 	"strconv"

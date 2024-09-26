@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/Maden-in-haven/crmlib/internal/database"
+	"github.com/Maden-in-haven/crmlib/pkg/database"
 	"golang.org/x/crypto/bcrypt"
 	"github.com/Maden-in-haven/crmlib/pkg/model"
 )
