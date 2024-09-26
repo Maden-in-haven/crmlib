@@ -1,8 +1,8 @@
 package database
 
 import (
-	"context"
 	"github.com/Maden-in-haven/crmlib/pkg/model"
+	"context"
 )
 
 func GetUserByUsername(username string) (*model.User, error) {
@@ -53,12 +53,8 @@ func GetUserByID(userID string) (*model.User, error) {
 	return &user, nil
 }
 
-func IsUserAdmin(userID string) (bool, error) {
-	var exists bool
-	query := `SELECT EXISTS (SELECT 1 FROM admins WHERE id = $1)`
-	err := DbPool.QueryRow(context.Background(), query, userID).Scan(&exists)
-	if err != nil {
-		return false, err // в случае других ошибок
-	}
-	return exists, nil
+func IsUserAdmin(userID string) (exists bool) {
+    query := `SELECT EXISTS (SELECT 1 FROM admins WHERE id = $1)`
+    DbPool.QueryRow(context.Background(), query, userID).Scan(&exists)
+    return exists
 }
