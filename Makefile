@@ -1,19 +1,21 @@
 .PHONY: all commit push tag release
 
-TAG_VERSION := v1.1.0
+# Переменная для версии тега
+TAG_VERSION := v1.1.1
 
+# Обновление библиотеки, коммит, тег и пуш
 all: commit tag push
 
+# Коммит изменений
 commit:
 	git add .
 	git commit -m "Обновление библиотеки"
 
-# Удаление старого тега и создание нового
+# Добавление тега
 tag:
-	-git tag -d $(TAG_VERSION)  # Игнорируем ошибку, если тега нет
-	-git push origin --delete $(TAG_VERSION)  # Удаляем удалённый тег, если он существует
 	git tag $(TAG_VERSION)
 
+# Пуш изменений и тега
 push:
 	git push origin $(TAG_VERSION)
-	git push origin main
+	git push origin main # Если основная ветка называется main, поменяйте на master, если нужно
