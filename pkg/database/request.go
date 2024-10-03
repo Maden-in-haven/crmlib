@@ -61,7 +61,7 @@ func IsUserAdmin(userID string) (exists bool) {
 }
 
 func GetUsersByRole(role string) ([]model.User, error) {
-	var users []model.User
+	users := []model.User{}
 
 	// SQL-запрос для поиска пользователей по роли
 	query := `

@@ -1,10 +1,11 @@
 package services
 
 import (
+	"errors"
+	"fmt"
 	"github.com/Maden-in-haven/crmlib/pkg/config"
 	"github.com/golang-jwt/jwt/v5"
 	"time"
-	"errors"
 )
 
 // GenerateJWT генерирует JWT токен для указанного пользователя
@@ -21,7 +22,7 @@ func GenerateJWT(userID string) (string, error) {
 		"exp_readable": tokenExpirationTime.Format(time.RFC3339), // Читаемое время истечения (ISO 8601)
 		"iat_readable": time.Now().Format(time.RFC3339),          // Читаемое время создания (ISO 8601)
 	}
-
+	fmt.Println(claims)
 	// Создаем новый токен с алгоритмом подписи и claims
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
@@ -33,7 +34,6 @@ func GenerateJWT(userID string) (string, error) {
 
 	return tokenString, nil
 }
-
 
 // GenerateRefreshToken генерирует рефреш токен для указанного пользователя
 func GenerateRefreshToken(userID string) (string, error) {
