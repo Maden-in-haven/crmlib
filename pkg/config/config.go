@@ -31,6 +31,10 @@ type DBConfig struct {
 	DBName   string
 }
 
+func init() {
+	LoadEnv()
+}
+
 // LoadEnv загружает переменные окружения из файла .env
 func LoadEnv() {
 	// Загружаем переменные окружения из файла .env
