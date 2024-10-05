@@ -18,7 +18,7 @@ type db struct {
 var DB *db
 
 // InitDatabase инициализирует подключение к базе данных
-func InitDatabase() error {
+func init() {
 	// Загружаем конфигурацию базы данных из переменных окружения
 	dbConfig := config.LoadDBConfig()
 
@@ -29,15 +29,14 @@ func InitDatabase() error {
 	// Парсинг конфигурации подключения
 	config, err := pgx.ParseConfig("")
 	if err != nil {
-		log.Printf("Ошибка парсинга конфигурации: %v", err)
-		return err
+		log.Fatalf("Ошибка парсинга конфигурации: %v", err)
 	}
 
+	// Заполняем конфигурацию из переменных окружения
 	config.Host = dbConfig.Host
 	port, err := strconv.Atoi(dbConfig.Port)
 	if err != nil {
-		log.Printf("Ошибка преобразования порта: %v", err)
-		return err
+		log.Fatalf("Ошибка преобразования порта: %v", err)
 	}
 	config.Port = uint16(port)
 	config.User = dbConfig.User
@@ -47,22 +46,19 @@ func InitDatabase() error {
 	// Подключаемся к базе данных
 	conn, err := pgx.ConnectConfig(ctx, config)
 	if err != nil {
-		log.Printf("Ошибка подключения к базе данных: %v", err)
-		return err
+		log.Fatalf("Ошибка подключения к базе данных: %v", err)
 	}
 
 	// Проверяем подключение с помощью Ping
 	err = conn.Ping(ctx)
 	if err != nil {
-		log.Printf("Ошибка проверки подключения к базе данных (ping): %v", err)
-		return err
+		log.Fatalf("Ошибка проверки подключения к базе данных (ping): %v", err)
 	}
 
-	// Сохраняем соединение в структуру
+	// Сохраняем соединение в глобальной структуре DB
 	DB = &db{Pool: conn}
 
-	log.Println("Успешно подключено к базе данных")
-	return nil
+	log.Println("Успешное подключение к базе данных")
 }
 
 func (db *db) LogAction(ctx context.Context, userID, action string) error {
