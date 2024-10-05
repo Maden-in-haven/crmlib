@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Oct  5 00:21:05 2024
+# Make data base, printed on Sat Oct  5 09:13:20 2024
 
 # Variables
 
@@ -49,7 +49,7 @@ PWD = /home/dannamer/vpn/crmlib
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # makefile (from 'Makefile', line 3)
-TAG_VERSION := v1.5.0
+TAG_VERSION := v1.5.1
 # environment
 XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # automatic
@@ -63,7 +63,7 @@ VSCODE_CODE_CACHE_PATH = /home/dannamer/.config/Code/CachedData/fee1edb8d6d72a0d
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.R96PV2
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.Y4T5U2
 # default
 .LOADED := 
 # default
@@ -76,8 +76,6 @@ CURDIR := /home/dannamer/vpn/crmlib
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = file:///home/dannamer/.vscode/extensions/ms-ceintl.vscode-language-pack-ru-1.94.2024100209/translations/extensions/vscode.json-language-features.i18n.json
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -101,13 +99,13 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 5131
+VSCODE_PID = 6339
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dannamer-RedmiBook-15:@/tmp/.ICE-unix/2052,unix/dannamer-RedmiBook-15:/tmp/.ICE-unix/2052
+SESSION_MANAGER = local/dannamer-RedmiBook-15:@/tmp/.ICE-unix/2078,unix/dannamer-RedmiBook-15:/tmp/.ICE-unix/2078
 # automatic
 *F = $(notdir $*)
 # environment
@@ -155,7 +153,7 @@ LC_TIME = ru_RU.UTF-8
 # environment
 GOTELEMETRY_GOPLS_CLIENT_START_TIME = 1707083970
 # environment
-INVOCATION_ID = d4f2dda7dcd343628249eed0d3aae79d
+INVOCATION_ID = 9b360ecd9cfd4bc497b25f7c41049e65
 # environment
 USERNAME = dannamer
 # environment
@@ -185,7 +183,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 2079
+SYSTEMD_EXEC_PID = 2106
 # environment
 DISPLAY = :0
 # environment
@@ -195,11 +193,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1901
+MANAGERPID = 1928
 # environment
 LC_MEASUREMENT = ru_RU.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 5131
+GIO_LAUNCHED_DESKTOP_FILE_PID = 6339
 # environment
 _ = /usr/share/code/code
 # environment
@@ -207,7 +205,7 @@ LC_PAPER = ru_RU.UTF-8
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
-JOURNAL_STREAM = 8:15852
+JOURNAL_STREAM = 8:15864
 # environment
 GOMODCACHE = /home/dannamer/go/pkg/mod
 # environment
@@ -243,7 +241,7 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = ru_RU.UTF-8
 # variable set hash-table stats:
-# Load=116/1024=11%, Rehash=0, Collisions=7/149=5%
+# Load=115/1024=11%, Rehash=0, Collisions=6/148=4%
 
 # Pattern-specific Variable Values
 
@@ -278,7 +276,6 @@ commit:
 # + := 
 # automatic
 # % := 
- 
 # automatic
 # ^ := 
 # automatic
@@ -294,7 +291,7 @@ commit:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-04 07:36:22.252800577
+#  Last modified 2024-10-05 05:16:37.879557886
 #  File has been updated.
 #  Successfully updated.
 
@@ -362,6 +359,6 @@ release:
 # strcache performance: lookups = 37 / hit rate = 48%
 # hash-table stats:
 # Load=19/8192=0%, Rehash=0, Collisions=0/37=0%
-# Finished Make data base on Sat Oct  5 00:21:05 2024
+# Finished Make data base on Sat Oct  5 09:13:20 2024
 
  

@@ -57,14 +57,20 @@ func (db *db) CreateClient(ctx context.Context, username, password, fullName, ph
 	return clientID, nil
 }
 
-func (db *db) CreateManager(ctx context.Context, username, password, fullName string, hireDate time.Time) (string, error) {
+func (db *db) CreateManager(ctx context.Context, username, password, fullName, hireDateStr string) (string, error) {
+	hireDate, err := time.Parse(time.RFC3339, hireDateStr)
+	if err != nil {
+		return "", fmt.Errorf("некорректный формат даты: %v", err)
+	}
+
 	// SQL-запрос для вызова хранимой функции create_manager
 	query := `SELECT create_manager($1, $2, $3, $4)`
 
 	var managerID string
 	passwordHash, _ := util.HashPassword(password)
+
 	// Выполнение запроса для вызова хранимой функции
-	err := db.Pool.QueryRow(ctx, query, username, passwordHash, fullName, hireDate).Scan(&managerID)
+	err = db.Pool.QueryRow(ctx, query, username, passwordHash, fullName, hireDate).Scan(&managerID)
 	if err != nil {
 		return "", fmt.Errorf("ошибка вызова хранимой функции create_manager: %v", err)
 	}
