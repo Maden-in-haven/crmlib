@@ -1,0 +1,9 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/dannamer/vpn/crmlib'
+git add .
+git commit -m "Обновление библиотеки"
+git tag v1.5.0
+git push origin v1.5.0
+git push origin main
+make: Leaving directory '/home/dannamer/vpn/crmlib'
+ 

@@ -5,13 +5,8 @@ import (
 
 	"github.com/Maden-in-haven/crmlib/pkg/database"
 	"github.com/Maden-in-haven/crmlib/pkg/model"
-	"golang.org/x/crypto/bcrypt"
+	"github.com/Maden-in-haven/crmlib/pkg/util"
 )
-
-// Функция для проверки пароля
-func CheckPassword(hashedPassword, password string) error {
-	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-}
 
 // Функция для аутентификации пользователя
 func AuthenticateUser(username, password string) (model.User, error) {
@@ -22,7 +17,7 @@ func AuthenticateUser(username, password string) (model.User, error) {
 	}
 
 	// Проверяем пароль
-	err = CheckPassword(user.PasswordHash, password)
+	err = util.CheckPassword(user.PasswordHash, password)
 	if err != nil {
 		return model.User{}, err
 	}
@@ -30,4 +25,3 @@ func AuthenticateUser(username, password string) (model.User, error) {
 	// Возвращаем пользователя, если пароль верен
 	return user, nil
 }
-

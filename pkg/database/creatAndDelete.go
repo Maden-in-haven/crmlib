@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/Maden-in-haven/crmlib/pkg/util"
 	"time"
 )
 
-func (db *db) CreateAdmin(ctx context.Context, username, passwordHash string, permissions map[string]interface{}) (string, error) {
+func (db *db) CreateAdmin(ctx context.Context, username, password string, permissions map[string]interface{}) (string, error) {
 	query := `SELECT create_admin($1, $2, $3)`
 
 	var adminID string
@@ -17,7 +18,7 @@ func (db *db) CreateAdmin(ctx context.Context, username, passwordHash string, pe
 	if err != nil {
 		return "", fmt.Errorf("ошибка преобразования permissions в JSON: %v", err)
 	}
-
+	passwordHash, _ := util.HashPassword(password)
 	// Выполнение запроса для вызова хранимой функции
 	err = db.Pool.QueryRow(ctx, query, username, passwordHash, permissionsJSON).Scan(&adminID)
 	if err != nil {
@@ -34,12 +35,12 @@ func (db *db) CreateAdmin(ctx context.Context, username, passwordHash string, pe
 	return adminID, nil
 }
 
-func (db *db) CreateClient(ctx context.Context, username, passwordHash, fullName, phoneNumber string) (string, error) {
+func (db *db) CreateClient(ctx context.Context, username, password, fullName, phoneNumber string) (string, error) {
 	// SQL-запрос для вызова хранимой функции create_client
 	query := `SELECT create_client($1, $2, $3, $4)`
 
 	var clientID string
-
+	passwordHash, _ := util.HashPassword(password)
 	// Выполнение запроса для вызова хранимой функции
 	err := db.Pool.QueryRow(ctx, query, username, passwordHash, fullName, phoneNumber).Scan(&clientID)
 	if err != nil {
@@ -56,12 +57,12 @@ func (db *db) CreateClient(ctx context.Context, username, passwordHash, fullName
 	return clientID, nil
 }
 
-func (db *db) CreateManager(ctx context.Context, username, passwordHash, fullName string, hireDate time.Time) (string, error) {
+func (db *db) CreateManager(ctx context.Context, username, password, fullName string, hireDate time.Time) (string, error) {
 	// SQL-запрос для вызова хранимой функции create_manager
 	query := `SELECT create_manager($1, $2, $3, $4)`
 
 	var managerID string
-
+	passwordHash, _ := util.HashPassword(password)
 	// Выполнение запроса для вызова хранимой функции
 	err := db.Pool.QueryRow(ctx, query, username, passwordHash, fullName, hireDate).Scan(&managerID)
 	if err != nil {

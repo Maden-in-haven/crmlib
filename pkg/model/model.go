@@ -14,6 +14,7 @@ type Admin struct {
 	Username    string
 	Permissions map[string]interface{}
 	CreatedAt   string
+	UpdatedAt   string
 }
 
 type Client struct {
@@ -22,6 +23,7 @@ type Client struct {
 	FullName    string
 	PhoneNumber string
 	CreatedAt   string
+	UpdatedAt   string
 }
 
 type Manager struct {
@@ -30,6 +32,7 @@ type Manager struct {
 	FullName  string
 	HireDate  string
 	CreatedAt string
+	UpdatedAt string
 }
 
 type UserLog struct {
