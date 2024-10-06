@@ -3,6 +3,7 @@ package config
 import (
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/joho/godotenv"
 )
@@ -38,7 +39,10 @@ func init() {
 // LoadEnv загружает переменные окружения из файла .env
 func LoadEnv() {
 	// Загружаем переменные окружения из файла .env
-	err := godotenv.Load("../../.env")
+	os.Chdir("../../")
+	path, _ := os.Getwd()
+	path = filepath.Join(path, ".env")
+	err := godotenv.Load(path)
 	if err != nil {
 		log.Println("Не удалось загрузить файл .env. Возможно, файл отсутствует или путь к нему некорректный.")
 	}
