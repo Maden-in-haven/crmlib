@@ -33,12 +33,6 @@ type DBConfig struct {
 }
 
 func init() {
-	LoadEnv()
-}
-
-// LoadEnv загружает переменные окружения из файла .env
-func LoadEnv() {
-	// Загружаем переменные окружения из файла .env
 	os.Chdir("../../")
 	path, _ := os.Getwd()
 	path = filepath.Join(path, ".env")
@@ -50,9 +44,6 @@ func LoadEnv() {
 
 // LoadDBConfig загружает конфигурацию для базы данных из переменных окружения
 func LoadDBConfig() *DBConfig {
-	// Загружаем переменные окружения из файла .env, если они есть
-	LoadEnv()
-
 	return &DBConfig{
 		Host:     GetEnv("POSTGRESQL_HOST", "localhost"),
 		Port:     GetEnv("POSTGRESQL_PORT", "5432"),
@@ -64,9 +55,6 @@ func LoadDBConfig() *DBConfig {
 
 // LoadJWTConfig загружает конфигурацию JWT из переменных окружения
 func LoadJWTConfig() *JWTConfig {
-	// Загружаем переменные окружения из файла .env, если они есть
-	LoadEnv()
-
 	return &JWTConfig{
 		SecretKey: GetEnv("JWT_SECRET_KEY", "your_default_secret_key"), // Получаем секретный ключ из переменной окружения
 	}
