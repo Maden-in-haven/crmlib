@@ -33,10 +33,7 @@ type DBConfig struct {
 }
 
 func init() {
-	os.Chdir("../../")
-	path, _ := os.Getwd()
-	path = filepath.Join(path, ".env")
-	err := godotenv.Load(path)
+	err := godotenv.Load(findFile(os.Getenv("HOME"), "crm.env"))
 	if err != nil {
 		log.Println("Не удалось загрузить файл .env. Возможно, файл отсутствует или путь к нему некорректный.")
 	}
@@ -58,4 +55,32 @@ func LoadJWTConfig() *JWTConfig {
 	return &JWTConfig{
 		SecretKey: GetEnv("JWT_SECRET_KEY", "your_default_secret_key"), // Получаем секретный ключ из переменной окружения
 	}
+}
+
+func findFile(root string, filename string) string {
+	var result string
+
+	// Рекурсивно обходим все файлы и папки в директории
+	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// Проверяем, совпадает ли имя файла с искомым
+		if info.Name() == filename {
+			result = path
+			return filepath.SkipDir // Останавливаем поиск после нахождения файла
+		}
+		return nil
+	})
+
+	if err != nil {
+		log.Fatalf("Ошибка при поиске файла: %v", err) // Немедленное завершение программы
+	}
+
+	if result == "" {
+		log.Fatalf("Файл %s не найден", filename) // Немедленное завершение программы
+	}
+
+	return result
 }
