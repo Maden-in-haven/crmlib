@@ -4,8 +4,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-
-	"github.com/joho/godotenv"
 )
 
 // JWTConfig структура для хранения конфигурации JWT
@@ -32,12 +30,12 @@ type DBConfig struct {
 	DBName   string
 }
 
-func init() {
-	err := godotenv.Load(findFile(os.Getenv("HOME"), "crm.env"))
-	if err != nil {
-		log.Println("Не удалось загрузить файл .env. Возможно, файл отсутствует или путь к нему некорректный.")
-	}
-}
+// func init() {
+// 	err := godotenv.Load(findFile(os.Getenv("HOME"), "crm.env"))
+// 	if err != nil {
+// 		log.Println("Не удалось загрузить файл .env. Возможно, файл отсутствует или путь к нему некорректный.")
+// 	}
+// }
 
 // LoadDBConfig загружает конфигурацию для базы данных из переменных окружения
 func LoadDBConfig() *DBConfig {
