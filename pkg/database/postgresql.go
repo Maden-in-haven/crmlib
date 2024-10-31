@@ -4,61 +4,56 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"strconv"
+	// "strconv"
 	"time"
 
 	"github.com/Maden-in-haven/crmlib/pkg/config"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type db struct {
-	Pool *pgx.Conn
+	Pool *pgxpool.Pool
 }
-// глобал
+
 var DB *db
 
-// InitDatabase инициализирует подключение к базе данных
 func init() {
-	// Загружаем конфигурацию базы данных из переменных окружения
+	// Загружаем конфигурацию базы данных
 	dbConfig := config.LoadDBConfig()
 
-	// Настраиваем контекст с тайм-аутом для подключения (20 секунд)
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
-	defer cancel()
+	// Создаем строку подключения
+	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
+		dbConfig.User, dbConfig.Password, dbConfig.Host, dbConfig.Port, dbConfig.DBName)
 
-	// Парсинг конфигурации подключения
-	config, err := pgx.ParseConfig("")
+	// Настраиваем конфигурацию пула соединений
+	config, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		log.Fatalf("Ошибка парсинга конфигурации: %v", err)
 	}
 
-	// Заполняем конфигурацию из переменных окружения
-	config.Host = dbConfig.Host
-	port, err := strconv.Atoi(dbConfig.Port)
-	if err != nil {
-		log.Fatalf("Ошибка преобразования порта: %v", err)
-	}
-	config.Port = uint16(port)
-	config.User = dbConfig.User
-	config.Password = dbConfig.Password
-	config.Database = dbConfig.DBName
+	// Настраиваем параметры пула
+	config.MaxConns = 10                 // Максимум 10 соединений в пуле
+	config.MaxConnLifetime = 30 * time.Minute // Максимальное время жизни соединения
+	config.HealthCheckPeriod = 1 * time.Minute // Период проверки активности соединений
 
-	// Подключаемся к базе данных
-	conn, err := pgx.ConnectConfig(ctx, config)
+	// Создаем пул с контекстом и тайм-аутом
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+
+	pool, err := pgxpool.NewWithConfig(ctx, config)
 	if err != nil {
 		log.Fatalf("Ошибка подключения к базе данных: %v", err)
 	}
 
-	// Проверяем подключение с помощью Ping
-	err = conn.Ping(ctx)
-	if err != nil {
+	// Проверяем соединение с помощью Ping
+	if err := pool.Ping(ctx); err != nil {
 		log.Fatalf("Ошибка проверки подключения к базе данных (ping): %v", err)
 	}
 
-	// Сохраняем соединение в глобальной структуре DB
-	DB = &db{Pool: conn}
+	// Сохраняем пул соединений в глобальной структуре
+	DB = &db{Pool: pool}
 
-	log.Println("Успешное подключение к базе данных")
+	log.Println("Успешное подключение к базе данных с использованием пула соединений")
 }
 
 func (db *db) LogAction(ctx context.Context, userID, action string) error {

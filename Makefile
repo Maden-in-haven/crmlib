@@ -1,6 +1,6 @@
 .PHONY: all commit push tag release
 
-TAG_VERSION := v1.5.8
+TAG_VERSION := v1.5.9
 
 all: commit tag push
 
